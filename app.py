@@ -45,7 +45,7 @@ with st.sidebar:
     st.markdown("---")
     col_a, col_b = st.columns(2)
     with col_a:
-        st.link_button("LinkedIn", "https://www.linkedin.com/in/YOUR_LINKEDIN_URL")
+        st.link_button("LinkedIn", "https://www.linkedin.com/in/https://www.linkedin.com/in/devanshi4/")
     with col_b:
         st.link_button("GitHub", "https://github.com/devanshi4")
 
