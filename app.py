@@ -2,121 +2,174 @@ import streamlit as st
 from PIL import Image
 
 # ======================
-# PAGE CONFIG
+# 1. VISUAL CONFIGURATION
 # ======================
-st.set_page_config(page_title="Devanshi Pandya | Data Analyst", page_icon="👩‍💻", layout="wide")
+st.set_page_config(
+    page_title="Devanshi Pandya | Data Scientist",
+    page_icon="🚀",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# Custom CSS for "Badges" and cleaner text
+st.markdown("""
+    <style>
+    .small-font { font-size:14px !important; }
+    .badge {
+        background-color: #2d2d2d;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 # ======================
-# SIDEBAR
+# 2. SIDEBAR (Profile & Resume)
 # ======================
 with st.sidebar:
+    # Try to load profile pic, fallback to emoji if missing
     try:
-        # Replace with your actual image file
         image = Image.open("profile_pic.png")
-        st.image(image, width=250)
-    except:
-        st.write("*(Add a profile_pic.png to your folder)*")
+        st.image(image, width=200)
+    except FileNotFoundError:
+        st.header("👩‍💻") 
+
+    st.title("Devanshi Pandya")
+    st.markdown("📍 **NYC, New York**")
+    st.markdown("📧 **devanshipandya44@gmail.com**")
     
-    st.markdown("### Devanshi Pandya")
-    st.write("📍 NYC, New York")
-    st.write("📧 devanshipandya44@gmail.com")
-    
-    # Download Resume Button
-    with open("Devanshi_Pandya_Resume.pdf", "rb") as pdf_file:
-        PDFbyte = pdf_file.read()
-    
-    st.download_button(
-        label="📄 Download Resume",
-        data=PDFbyte,
-        file_name="Devanshi_Resume.pdf",
-        mime="application/octet-stream",
-    )
-    
+    # Social Links as Buttons
     st.markdown("---")
-    st.write("**Skills:** Python, SQL, Machine Learning, GenAI, Tableau")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        st.link_button("LinkedIn", "https://www.linkedin.com/in/YOUR_LINKEDIN_URL")
+    with col_b:
+        st.link_button("GitHub", "https://github.com/devanshi4")
+
+    # Resume Download
+    st.markdown("---")
+    try:
+        with open("Devanshi_Pandya_Resume.pdf", "rb") as pdf_file:
+            st.download_button(
+                label="📄 Download Resume",
+                data=pdf_file,
+                file_name="Devanshi_Pandya_Resume.pdf",
+                mime="application/pdf"
+            )
+    except FileNotFoundError:
+        st.warning("⚠️ Resume file not found in folder")
 
 # ======================
-# MAIN PAGE - HERO SECTION
+# 3. HERO SECTION (Intro)
 # ======================
 st.title("Hi, I'm Devanshi! 👋")
-st.subheader("Data Scientist | GenAI Enthusiast | Problem Solver")
-
+st.markdown("### 🔍 Data Analyst | Data Scientist | GenAI Builder")
 st.markdown("""
 I bridge the gap between **raw data** and **strategic decisions**. 
-With a background in Electrical Engineering (USC) and expertise in **Machine Learning**, 
-I build tools that predict what happens next and explain *why*.
+Currently optimizing network operations at **Verizon**, I specialize in replacing manual workflows with **AI-driven pipelines** and **predictive models**.
 """)
 
-st.markdown("---")
+# Tech Stack Badges (Visual Upgrade)
+st.write("---")
+st.markdown("**MY TECH STACK:**")
+st.markdown("""
+<span class="badge">Python</span>
+<span class="badge">Generative AI</span>
+<span class="badge">LangChain</span>
+<span class="badge">SQL</span>
+<span class="badge">Machine Learning</span>
+<span class="badge">Tableau</span>
+<span class="badge">Streamlit</span>
+""", unsafe_allow_html=True)
+st.write("") # Spacer
 
 # ======================
-# PROJECTS SECTION
+# 4. KEY PROJECTS (Interactive Cards)
 # ======================
-st.header("💻 Interactive Projects")
-st.write("Don't just take my word for it—**play with the tools I built:**")
+st.header("💻 Key Projects")
 
 col1, col2 = st.columns(2)
 
-# --- PROJECT 1 ---
+# --- Project 1: SQL AI Assistant ---
 with col1:
-    st.info("🤖 **AI-Powered SQL Assistant**")
-    st.write("A GenAI tool that lets you talk to your database in plain English.")
-    st.markdown("**Tech:** LangChain, OpenAI, PostgreSQL")
-    
-    # Link to your deployed Streamlit app (We will get this URL later)
-    if st.button("Launch SQL Assistant 🚀"):
-        st.markdown("[Click here to open App](https://github.com/devanshi4/sql-ai-assistant)", unsafe_allow_html=True)
-    
-    with st.expander("See Key Features"):
-        st.write("- Translates Natural Language to SQL")
-        st.write("- Handles Multi-table Joins")
-        st.write("- Auto-corrects SQL errors")
+    with st.container(border=True):
+        st.subheader("🤖 AI SQL Assistant")
+        st.markdown("**Stack:** LangChain, OpenAI, PostgreSQL")
+        st.markdown("""
+        *Built a GenAI tool that lets non-technical users query databases in plain English.*
+        - **Impact:** Reduced ad-hoc data retrieval time by ~80%.
+        - **Tech:** Implemented schema-aware prompt engineering for multi-table joins.
+        """)
+        # Link to the repo or live app
+        st.link_button("View Code & Demo", "https://github.com/devanshi4/sql-ai-assistant")
 
-# --- PROJECT 2 ---
+# --- Project 2: Churn Prediction ---
 with col2:
-    st.success("📉 **Customer Churn Predictor**")
-    st.write("An ML dashboard that predicts customer risk with 79% accuracy.")
-    st.markdown("**Tech:** XGBoost, SHAP, Streamlit")
-    
-    # Link to your deployed Streamlit app (We will get this URL later)
-    if st.button("Launch Churn Predictor 🔮"):
-        st.markdown("[Click here to open App](https://github.com/devanshi4/Churn-Prediction)", unsafe_allow_html=True)
-
-    with st.expander("See Key Features"):
-        st.write("- Interactive Risk Calculator")
-        st.write("- Explainable AI (SHAP Plots)")
-        st.write("- Real-time scenario planning")
-
-st.markdown("---")
+    with st.container(border=True):
+        st.subheader("📉 Churn Predictor")
+        st.markdown("**Stack:** XGBoost, SHAP, Streamlit")
+        st.markdown("""
+        *Engineered an ML dashboard to identify at-risk customers with 79% accuracy.*
+        - **Impact:** Used Explainable AI (SHAP) to visualize key risk drivers.
+        - **Tech:** Interactive dashboard for real-time scenario planning.
+        """)
+        # Link to the repo or live app
+        st.link_button("View Code & Demo", "https://github.com/devanshi4/Churn-Prediction")
 
 # ======================
-# EXPERIENCE TIMELINE
+# 5. EXPERIENCE (Content Upgrade)
 # ======================
-st.header("📚 Experience & Education")
+st.header("📚 Professional Experience")
 
-st.markdown("##### 💼 **Data Analyst | Cloudify (Verizon)**")
-st.caption("July 2024 - Present")
-st.write("Building AI-assisted pipelines to automate error detection in network logs.")
+# --- JOB 1: VERIZON ---
+with st.container(border=True):
+    st.markdown("#### **Data Analyst | Cloudify Technologies (Verizon)**")
+    st.markdown("Start: *July 2024 - Present*")
+    st.markdown("""
+    - **AI Modernization:** Replaced a static 450-line SQL script with an **AI-assisted Python pipeline**, using GenAI to parse complex JSON logs.
+    - **Operational Efficiency:** Analyzed orchestration logs to build cycle-time models, reducing troubleshooting time by **~40%**.
+    - **Data Engineering:** Developed SQL pipelines to validate network deployment metrics across thousands of sites (Accuracy +55%).
+    """)
 
-st.markdown("##### 💼 **Data Analyst | Brillio**")
-st.caption("Sept 2023 - June 2024")
-st.write("Developed predictive models for marketing trends and customer retention.")
+# --- JOB 2: BRILLIO ---
+with st.container(border=True):
+    st.markdown("#### **Data Analyst | Brillio**")
+    st.markdown("Start: *Sept 2023 - June 2024*")
+    st.markdown("""
+    - **Predictive Modeling:** Built Time Series & Regression models in Python/R, improving forecast accuracy by **20-30%**.
+    - **ETL Automation:** Engineered automated pipelines (SQL/Python), reducing latency by **~40%**.
+    - **Churn Analysis:** Developed customer segmentation models using TensorFlow/Scikit-learn (Performance +15%).
+    """)
 
-st.markdown("##### 🎓 **M.S. Electrical Engineering | USC**")
-st.caption("Class of 2023")
+# --- JOB 3: USC ---
+with st.container(border=True):
+    st.markdown("#### **Business Data Analyst | USC Auxiliary Services**")
+    st.markdown("Start: *Feb 2022 - May 2023*")
+    st.markdown("""
+    - **Dashboarding:** Built interactive Power BI/Excel dashboards that reduced manual reporting time by **~40%** and improved vendor tracking clarity.
+    """)
 
 # ======================
-# CONTACT FORM (Simple)
+# 6. EDUCATION & CONTACT
 # ======================
-st.markdown("---")
-st.header("📬 Get In Touch")
+st.header("🎓 Education")
+st.markdown("**M.S. Electrical & Computer Engineering** | University of Southern California (2023)")
+st.markdown("**B.Tech. Electrical & Communication Engineering** | Gujarat Technological University (2021)")
+
+st.write("---")
+st.header("📬 Get in Touch")
+st.write("Ready to build scalable AI solutions? Let's connect!")
 
 contact_form = """
 <form action="https://formsubmit.co/devanshipandya44@gmail.com" method="POST">
-     <input type="text" name="name" placeholder="Your Name" required>
-     <input type="email" name="email" placeholder="Your Email" required>
-     <textarea name="message" placeholder="Your Message here"></textarea>
-     <button type="submit">Send</button>
+     <input type="hidden" name="_captcha" value="false">
+     <input type="text" name="name" placeholder="Your Name" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;">
+     <input type="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;">
+     <textarea name="message" placeholder="Your Message" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+     <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Send Message</button>
 </form>
 """
 st.markdown(contact_form, unsafe_allow_html=True)
