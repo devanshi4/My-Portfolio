@@ -1,14 +1,10 @@
-
-
-Devanshi_Pandya_Resume.pdf
-
 import streamlit as st
 from PIL import Image
 
 # ======================
 # PAGE CONFIG
 # ======================
-st.set_page_config(page_title="Devanshi Pandya | Data Scientist", page_icon="👩‍💻", layout="wide")
+st.set_page_config(page_title="Devanshi Pandya | Data Analyst", page_icon="👩‍💻", layout="wide")
 
 # ======================
 # SIDEBAR
