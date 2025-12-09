@@ -22,11 +22,11 @@ def load_lottieurl(url):
     return r.json()
 
 # --- LOAD ASSETS ---
-# 1. Hero Animation: CHANGED TO WOMAN ANALYST
+# 1. Hero Animation: WOMAN ANALYST
 lottie_coding = load_lottieurl("https://lottie.host/5aee9f59-69e1-45f6-b333-68d1c4423859/68d1c4423859.json")
 # 2. SQL Project Animation
 lottie_data = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_5njp3vgg.json")
-
+# 3. Churn Project Animation
 lottie_data2 = load_lottieurl("https://assets10.lottiefiles.com/packages/lf20_cpe8dcb0.json")
 
 # Custom CSS for a cleaner look
@@ -147,7 +147,7 @@ col_p1, col_p2 = st.columns(2)
 with col_p1:
     with st.container():
         st.subheader("🤖 AI SQL Assistant")
-        st_lottie(lottie_data, height=150, key="churn")
+        st_lottie(lottie_data, height=150, key="data")
         st.markdown("**Tech:** LangChain, OpenAI, PostgreSQL")
         st.markdown("A GenAI tool that lets non-technical users query databases in plain English.")
         st.link_button("View Code", "https://github.com/devanshi4/sql-ai-assistant")
@@ -155,7 +155,8 @@ with col_p1:
 with col_p2:
     with st.container():
         st.subheader("📉 Churn Predictor")
-        st_lottie(lottie_data2, height=150, key="data")
+        # FIXED: Changed key from "data" to "churn" to avoid duplicate error
+        st_lottie(lottie_data2, height=150, key="churn")
         st.markdown("**Tech:** XGBoost, SHAP, Streamlit")
         st.markdown("An ML dashboard predicting customer risk with 79% accuracy & Explainable AI.")
         st.link_button("View Code", "https://github.com/devanshi4/Churn-Prediction")
