@@ -21,72 +21,86 @@ def load_lottieurl(url):
         return None
     return r.json()
 
-# Load Assets (Animations)
+# --- LOAD ASSETS ---
+# 1. Profile: Woman Analyst with dark hair working on data
+lottie_profile = load_lottieurl("https://assets4.lottiefiles.com/packages/lf20_3rwasyjy.json")
+# 2. Hero: Coding/Data
 lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json")
-lottie_data = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_5njp3vgg.json")
+# 3. Project: SQL (Robot/AI)
+lottie_ai = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_5njp3vgg.json")
+# 4. Project: Churn (Moving Graph/Analytics)
+lottie_graph = load_lottieurl("https://assets7.lottiefiles.com/packages/lf20_hs5pkq.json")
 
-# Custom CSS for a cleaner look
+# Custom CSS for styling
 st.markdown("""
 <style>
-    .main {
-        background-color: #f5f7fa; 
-    }
-    [data-testid="stSidebar"] {
-        background-color: #2b303b;
+    .main { background-color: #f5f7fa; }
+    h1, h2, h3 { color: #2b303b; }
+    /* Style for the badge pills */
+    .badge {
+        background-color: #ff4b4b;
         color: white;
-    }
-    h1, h2, h3 {
-        color: #2b303b;
-    }
-    .metric-card {
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        margin-right: 5px;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # ======================
-# 2. SIDEBAR (Dark Themed)
+# 2. SIDEBAR
 # ======================
 with st.sidebar:
-    try:
-        image = Image.open("profile_pic.png")
-        st.image(image, width=220)
-    except:
-        st.header("👩‍💻")
+    # Use the Lottie Animation for the profile picture (Woman Analyst)
+    st_lottie(lottie_profile, height=200, key="profile")
 
-    st.markdown("<h1 style='color: white;'>Devanshi Pandya</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #dcdcdc;'>📍 NYC, New York</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Devanshi Pandya</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: gray;'>📍 Los Angeles, CA</p>", unsafe_allow_html=True)
     
-    # Resume Download Button
+    st.markdown("---")
+    
+    # --- UNIFIED BUTTON SECTION ---
+    # We use columns to make the buttons look uniform
+    st.write("**Resume & Socials**")
+    
+    # 1. Download Resume Button
     try:
         with open("Devanshi_Pandya_Resume.pdf", "rb") as pdf_file:
             st.download_button(
                 label="📄 Download Resume",
                 data=pdf_file,
                 file_name="Devanshi_Pandya_Resume.pdf",
-                mime="application/pdf"
+                mime="application/pdf",
+                use_container_width=True
             )
     except:
-        st.warning("Resume file missing")
+        st.warning("Resume file missing in folder")
 
-    st.markdown("---")
-    st.markdown("<h3 style='color: white;'>Connect</h3>", unsafe_allow_html=True)
-    st.link_button("LinkedIn", "https://linkedin.com/in/YOUR_LINKEDIN")
-    st.link_button("GitHub", "https://github.com/devanshi4")
+    # 2. Social Links (Side by Side)
+    col_s1, col_s2 = st.columns(2)
+    with col_s1:
+        st.link_button("LinkedIn", "https://linkedin.com/in/YOUR_LINKEDIN", use_container_width=True)
+    with col_s2:
+        st.link_button("GitHub", "https://github.com/devanshi4", use_container_width=True)
 
-    # Skill Meters
+    # --- SKILLS ---
     st.markdown("---")
-    st.markdown("<h3 style='color: white;'>Core Skills</h3>", unsafe_allow_html=True)
+    st.markdown("### Core Skills")
+    
     st.write("Python & SQL")
-    st.progress(90)
-    st.write("Machine Learning")
+    st.progress(95)
+    
+    st.write("Machine Learning (XGBoost/Scikit)")
+    st.progress(85)
+    
+    st.write("Generative AI (LangChain)")
     st.progress(80)
-    st.write("Generative AI")
-    st.progress(75)
-    st.write("Data Visualization")
+    
+    st.write("Predictive Modeling")
+    st.progress(90)
+    
+    st.write("Tableau & Power BI")
     st.progress(85)
 
 # ======================
@@ -98,96 +112,141 @@ with col1:
     st.title("Hi, I'm Devanshi! 👋")
     st.markdown("### 🚀 Data Scientist | GenAI Builder | Analyst")
     st.write("""
-    I transform messy data into **strategic decisions** and **intelligent tools**. 
-    Currently optimizing network operations at **Verizon**, I specialize in replacing manual workflows 
-    with **AI-driven pipelines** and **predictive models**.
+    I transform complex workflow logs into **strategic decisions** and **intelligent tools**. 
+    Currently optimizing network operations at **Cloudify (Verizon)**, I specialize in modernizing legacy SQL 
+    processes into **automated Python & AI-driven solutions**.
     """)
-    st.info("**Current Focus:** Leveraging LLMs (LangChain) to automate SQL queries & building Explainable AI models.")
+    
+    # Tech Stack Badges
+    st.markdown("""
+    <span class="badge">Python</span>
+    <span class="badge">Generative AI</span>
+    <span class="badge">SQL</span>
+    <span class="badge">A/B Testing</span>
+    <span class="badge">Time Series</span>
+    <span class="badge">Tableau</span>
+    """, unsafe_allow_html=True)
 
 with col2:
-    st_lottie(lottie_coding, height=250, key="coding")
+    st_lottie(lottie_coding, height=250, key="hero_anim")
 
 st.markdown("---")
 
 # ======================
-# 4. INTERACTIVE CAREER TIMELINE (New Feature!)
+# 4. INTERACTIVE CAREER TIMELINE (UPDATED)
 # ======================
 st.header("📅 My Career Journey")
 
-# Creating the Timeline Data
+# Timeline Data (Updated with correct dates & Descriptions for Hover)
 data = [
-    dict(Task="Master's at USC", Start='2021-08-01', Finish='2023-05-30', Resource='Education'),
-    dict(Task="USC Auxiliary Services", Start='2022-02-01', Finish='2023-05-01', Resource='Work'),
-    dict(Task="Brillio", Start='2023-09-01', Finish='2024-06-30', Resource='Work'),
-    dict(Task="Cloudify (Verizon)", Start='2024-07-01', Finish='2025-12-31', Resource='Work') # Ongoing
+    dict(Task="Cloudify (Verizon)", Start='2024-08-01', Finish='2025-12-31', Resource='Current Role', 
+         Description="AI Integration, Network Analytics, Cycle-Time Models"),
+    
+    dict(Task="Brillio", Start='2023-09-01', Finish='2024-07-31', Resource='Experience', 
+         Description="Predictive Analytics, ETL Automation, Churn Modeling"),
+    
+    dict(Task="Master's at USC", Start='2021-08-01', Finish='2023-05-30', Resource='Education', 
+         Description="M.S. Electrical & Computer Engineering"),
+    
+    dict(Task="USC Auxiliary Services", Start='2022-02-01', Finish='2023-05-01', Resource='Experience', 
+         Description="Dashboarding, Supply Chain Analytics"),
+    
+    dict(Task="Verizon Internship", Start='2022-05-01', Finish='2022-08-30', Resource='Internship', 
+         Description="Churn Prediction, A/B Testing, Clustering"),
 ]
+
 df = pd.DataFrame(data)
 
-# Creating the Gantt Chart using Plotly
+# Gantt Chart
 fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource", 
-                  title="Experience Timeline", height=300,
-                  color_discrete_map={'Work': '#ff4b4b', 'Education': '#1f77b4'})
+                  title="Professional Timeline (Hover for details)", height=350,
+                  hover_data=["Description"], # This makes the description pop up!
+                  color_discrete_map={'Current Role': '#ff4b4b', 'Experience': '#2d2d2d', 'Internship': '#ffa500', 'Education': '#1f77b4'})
 
-fig.update_yaxes(autorange="reversed") # Verify visual alignment
+fig.update_yaxes(autorange="reversed")
 st.plotly_chart(fig, use_container_width=True)
 
 # ======================
-# 5. PROJECT SHOWCASE (Interactive Cards)
+# 5. PROJECT SHOWCASE (Updated Animations)
 # ======================
 st.header("💻 What I've Built")
-st.write("Click the links to explore the code or demo.")
 
 col_p1, col_p2 = st.columns(2)
 
+# Project 1
 with col_p1:
-    with st.container():
+    with st.container(border=True):
         st.subheader("🤖 AI SQL Assistant")
-        st_lottie(lottie_data, height=150, key="data")
+        st_lottie(lottie_ai, height=150, key="ai_anim")
         st.markdown("**Tech:** LangChain, OpenAI, PostgreSQL")
         st.markdown("A GenAI tool that lets non-technical users query databases in plain English.")
-        st.link_button("View Code", "https://github.com/devanshi4/sql-ai-assistant")
+        st.link_button("View Code", "https://github.com/devanshi4/sql-ai-assistant", use_container_width=True)
 
+# Project 2
 with col_p2:
-    with st.container():
+    with st.container(border=True):
         st.subheader("📉 Churn Predictor")
-        # You could add a static image of your dashboard here using st.image()
+        st_lottie(lottie_graph, height=150, key="graph_anim") # NEW ANIMATION HERE
         st.markdown("**Tech:** XGBoost, SHAP, Streamlit")
         st.markdown("An ML dashboard predicting customer risk with 79% accuracy & Explainable AI.")
-        st.link_button("View Code", "https://github.com/devanshi4/Churn-Prediction")
+        st.link_button("View Code", "https://github.com/devanshi4/Churn-Prediction", use_container_width=True)
 
 # ======================
-# 6. DETAILED EXPERIENCE
+# 6. DETAILED EXPERIENCE (4 TABS)
 # ======================
 st.markdown("---")
 st.header("📝 Detailed Experience")
 
-tab1, tab2, tab3 = st.tabs(["Verizon (Current)", "Brillio", "USC"])
+tab1, tab2, tab3, tab4 = st.tabs(["Cloudify (Verizon)", "Brillio", "USC Auxiliary", "Verizon Intern"])
 
 with tab1:
-    st.subheader("Data Analyst | Cloudify Technologies (Contracted to Verizon)")
+    st.subheader("Data Analyst | Cloudify (Contracted to Verizon)")
+    st.caption("August 2024 - Present | Los Angeles, CA")
     st.markdown("""
-    - **AI Modernization:** Replaced a static 450-line SQL script with an **AI-assisted Python pipeline**, using GenAI to parse complex JSON logs.
-    - **Operational Efficiency:** Analyzed orchestration logs to build cycle-time models, reducing troubleshooting time by **~40%**.
-    - **Data Engineering:** Developed SQL pipelines to validate network deployment metrics across thousands of sites (Accuracy +55%).
+    My role sits at the intersection of **Data Engineering** and **Analytics**, modernizing legacy SQL processes into automated Python & AI-driven solutions.
+    
+    - 🚀 **AI Integration:** Led a modernization initiative to replace static, maintenance-heavy SQL scripts (450+ lines) with an **AI-assisted Python pipeline**, using GenAI to dynamically parse complex JSON event streams.
+    - 📊 **Operational Intelligence:** Analyzed workflow logs to build cycle-time models, identifying bottlenecks that reduced troubleshooting time by **~40%**.
+    - 🛠 **Data Engineering:** Developed SQL pipelines to validate network deployment metrics across thousands of sites, improving version tracking accuracy by **~55%**.
+    - 📈 **Dashboarding:** Designed the team's central reporting suite (**Tableau, Looker**) to provide real-time visibility into KPI performance.
     """)
 
 with tab2:
     st.subheader("Data Analyst | Brillio")
+    st.caption("Sept 2023 - July 2024 | Tampa, FL")
     st.markdown("""
-    - **Predictive Modeling:** Built Time Series & Regression models in Python/R, improving forecast accuracy by **20-30%**.
-    - **ETL Automation:** Engineered automated pipelines (SQL/Python), reducing latency by **~40%**.
-    - **Churn Analysis:** Developed customer segmentation models using TensorFlow/Scikit-learn (Performance +15%).
+    Partnered with cross-functional teams to move the organization from descriptive reporting to **predictive modeling**.
+    
+    - 🔮 **Predictive Analytics:** Developed Time Series and Regression models in Python/R to forecast marketing trends (**20-30% accuracy lift**).
+    - ⚙️ **ETL Automation:** Engineered automated pipelines (SQL/Python), reducing data processing latency by **~40%**.
+    - 📉 **Customer Retention:** Designed customer segmentation and churn prediction models using **TensorFlow/Scikit-learn** (Performance boost ~15%).
     """)
 
 with tab3:
     st.subheader("Business Data Analyst | USC Auxiliary Services")
+    st.caption("Feb 2022 - May 2023 | Los Angeles, CA")
     st.markdown("""
-    - **Dashboarding:** Built interactive Power BI/Excel dashboards that reduced manual reporting time by **~40%**.
-    - **Supply Chain:** Optimized inventory tracking for high-volume dining operations.
+    Oversaw inventory analytics for the university's high-volume dining operations, digitizing manual workflows.
+    
+    - 📊 **Dashboard Development:** Transformed manual tracking into dynamic **Power BI/Excel dashboards**, reducing reporting time by **~40%**.
+    - 🔄 **Process Optimization:** Streamlined order-to-payment workflows, resolving data discrepancies in receipt tracking.
+    - 📦 **Supply Chain Analytics:** Managed large-scale vendor data to optimize inventory levels and minimize stock variances.
+    """)
+
+with tab4:
+    st.subheader("Data Analyst Intern | Verizon")
+    st.caption("May 2022 - Aug 2022 | Remote")
+    st.markdown("""
+    Leveraged Machine Learning to drive customer retention strategies and optimize marketing effectiveness.
+    
+    - 📉 **Predictive Modeling:** Enhanced customer churn prediction models, improving accuracy by **18%** to support targeted retention.
+    - 🎯 **Customer Segmentation:** Applied unsupervised learning (**K-means, DBSCAN**) to cluster user bases for personalized marketing.
+    - 🧪 **A/B Testing:** Designed statistical experiments to evaluate new product features on user engagement.
+    - 🐍 **Data Pipelines:** Utilized Python and SQL for end-to-end data extraction and cleaning.
     """)
 
 # ======================
-# 7. CONTACT FORM
+# 7. CONTACT
 # ======================
 st.markdown("---")
 st.header("📬 Let's Connect")
