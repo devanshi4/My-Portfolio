@@ -26,7 +26,7 @@ def load_lottieurl(url):
 
 # --- LOAD ASSETS (Working Links) ---
 # 1. Hero: Woman Analyst (Dark hair, Laptop)
-lottie_hero = load_lottieurl("https://lottie.host/880ff36b-7347-4933-9111-9a7019d35689/x7fH9i2TqW.json")
+lottie_hero = load_lottieurl("https://assets2.lottiefiles.com/packages/lf20_w51pcehl.json")
 # Alternative Hero if above fails: "https://assets5.lottiefiles.com/packages/lf20_3rwasyjy.json"
 
 # 2. SQL Project: Robot
