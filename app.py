@@ -23,10 +23,11 @@ def load_lottieurl(url):
 
 # --- LOAD ASSETS ---
 # 1. Hero Animation: CHANGED TO WOMAN ANALYST
-lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_3rwasyjy.json")
-
+lottie_coding = load_lottieurl("https://lottie.host/5aee9f59-69e1-45f6-b333-68d1c4423859/68d1c4423859.json")
 # 2. SQL Project Animation
 lottie_data = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_5njp3vgg.json")
+
+lottie_data2 = load_lottieurl("https://assets10.lottiefiles.com/packages/lf20_cpe8dcb0.json")
 
 # Custom CSS for a cleaner look
 st.markdown("""
@@ -154,6 +155,7 @@ with col_p1:
 with col_p2:
     with st.container():
         st.subheader("📉 Churn Predictor")
+        st_lottie(lottie_data2, height=150, key="data")
         st.markdown("**Tech:** XGBoost, SHAP, Streamlit")
         st.markdown("An ML dashboard predicting customer risk with 79% accuracy & Explainable AI.")
         st.link_button("View Code", "https://github.com/devanshi4/Churn-Prediction")
@@ -164,7 +166,7 @@ with col_p2:
 st.markdown("---")
 st.header("📝 Detailed Experience")
 
-tab1, tab2, tab3 = st.tabs(["Verizon (Current)", "Brillio", "USC"])
+tab1, tab2, tab3, tab4 = st.tabs(["Verizon (Current)", "Brillio", "Verizon Internship", "USC"])
 
 with tab1:
     st.subheader("Data Analyst | Cloudify Technologies (Contracted to Verizon)")
@@ -183,6 +185,17 @@ with tab2:
     """)
 
 with tab3:
+    st.subheader("Intern | Verizon")
+    st.markdown("""
+    - **Predictive Modeling:** Enhanced customer churn prediction models, improving accuracy by **18%** to support targeted retention campaigns.
+    - **Customer Segmentation:** Applied unsupervised learning techniques (**K-means, DBSCAN**) to cluster user bases for personalized marketing.
+    - **A/B Testing:** Designed and executed statistical experiments (A/B tests) to evaluate the impact of new product features on user engagement.
+    - **Strategic Insights:** Translated complex clustering and churn findings into actionable insights for non-technical stakeholders.
+    """)
+
+
+
+with tab4:
     st.subheader("Business Data Analyst | USC Auxiliary Services")
     st.markdown("""
     - **Dashboarding:** Built interactive Power BI/Excel dashboards that reduced manual reporting time by **~40%**.
