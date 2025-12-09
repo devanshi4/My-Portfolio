@@ -33,7 +33,7 @@ lottie_hero = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_qp1q
 lottie_sql = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_5njp3vgg.json")
 
 # 3. Churn Project: Moving Graph
-lottie_churn = load_lottieurl("https://lottie.host/990b7956-655f-4632-9c2b-e7b85145b08e/2X9t9z6B7w.json")
+lottie_churn = load_lottieurl("https://assets3.lottiefiles.com/packages/lf20_qp1q7mct.json")
 
 # Custom CSS for clean buttons and badges
 st.markdown("""
