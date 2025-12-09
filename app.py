@@ -126,23 +126,103 @@ st.markdown("---")
 # ======================
 # 4. CAREER JOURNEY
 # ======================
+# ======================
+# 4. CAREER JOURNEY (Polished Version)
+# ======================
 st.header("📅 My Career Journey")
 
-# Creating the Timeline Data
+# 1. Create a better DataFrame with specific columns for the Tooltip
 data = [
-    dict(Task="Master's at USC", Start='2021-08-01', Finish='2023-05-30', Resource='Education'),
-    dict(Task="USC Auxiliary Services", Start='2022-02-01', Finish='2023-05-01', Resource='Work'),
-    dict(Task="Brillio", Start='2023-09-01', Finish='2024-06-30', Resource='Work'),
-    dict(Task="Cloudify (Verizon)", Start='2024-07-01', Finish='2025-12-31', Resource='Work') # Ongoing
+    {
+        "Company": "Cloudify (Verizon)",
+        "Role": "Data Analyst",
+        "Start": "2024-07-01",
+        "Finish": "2025-12-31",
+        "Type": "Work",
+        "Description": "Replacing 450+ line SQL scripts with Python & AI."
+    },
+    {
+        "Company": "Brillio",
+        "Role": "Data Analyst",
+        "Start": "2023-09-01",
+        "Finish": "2024-06-30",
+        "Type": "Work",
+        "Description": "Predictive Modeling & ETL Automation."
+    },
+    {
+        "Company": "USC Auxiliary",
+        "Role": "Business Data Analyst",
+        "Start": "2022-02-01",
+        "Finish": "2023-05-01",
+        "Type": "Work",
+        "Description": "Dashboarding & Supply Chain Analytics."
+    },
+    {
+        "Company": "Verizon (Internship)",
+        "Role": "Data Analyst Intern",
+        "Start": "2022-05-01",
+        "Finish": "2022-08-30",
+        "Type": "Internship",
+        "Description": "Churn Prediction (18% Lift) & A/B Testing."
+    },
+    {
+        "Company": "USC (Master's)",
+        "Role": "Student",
+        "Start": "2021-08-01",
+        "Finish": "2023-05-30",
+        "Type": "Education",
+        "Description": "Electrical & Computer Engineering"
+    }
 ]
+
 df = pd.DataFrame(data)
 
-# Creating the Gantt Chart using Plotly
-fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource", 
-                  title="Experience Timeline", height=300,
-                  color_discrete_map={'Work': '#ff4b4b', 'Education': '#1f77b4'})
+# 2. Create the Chart
+fig = px.timeline(
+    df, 
+    x_start="Start", 
+    x_end="Finish", 
+    y="Company", # Put Company Name on the Y-Axis
+    color="Type",
+    title="", # Removed title to save space (st.header already does it)
+    hover_name="Role", # Bold title on Hover
+    hover_data={"Description": True, "Type": False, "Start": False, "Finish": False, "Company": False}, # Clean up hover
+    height=400,
+    color_discrete_map={
+        'Work': '#ff4b4b',      # Red for jobs
+        'Internship': '#ffa500', # Orange for Intern
+        'Education': '#1f77b4'   # Blue for School
+    }
+)
 
-fig.update_yaxes(autorange="reversed") # Verify visual alignment
+# 3. Clean up the Layout (Remove gridlines, fix dates)
+fig.update_layout(
+    xaxis_title="",
+    yaxis_title="",
+    showlegend=True,
+    legend_title_text="",
+    xaxis=dict(
+        showgrid=False,      # Remove vertical gridlines
+        side="top"           # Put dates at the top (easier to read)
+    ),
+    yaxis=dict(
+        autorange="reversed", # Current job at the top
+        showgrid=False
+    ),
+    margin=dict(l=0, r=0, t=30, b=0), # Tighten margins
+    hoverlabel=dict(
+        bgcolor="white",
+        font_size=14,
+        font_family="sans-serif"
+    )
+)
+
+# 4. Customizing the Hover Template (The "Magic" Part)
+# This makes the tooltip look like: "Role / Description" instead of "Task: X"
+fig.update_traces(
+    hovertemplate="<b>%{hovertext}</b><br><span style='font-size:12px; color:grey;'>%{customdata[0]}</span><extra></extra>"
+)
+
 st.plotly_chart(fig, use_container_width=True)
 
 
