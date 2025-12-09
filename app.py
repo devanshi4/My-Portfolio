@@ -147,7 +147,7 @@ col_p1, col_p2 = st.columns(2)
 with col_p1:
     with st.container():
         st.subheader("🤖 AI SQL Assistant")
-        st_lottie(lottie_data, height=150, key="data")
+        st_lottie(lottie_data, height=150, key="churn")
         st.markdown("**Tech:** LangChain, OpenAI, PostgreSQL")
         st.markdown("A GenAI tool that lets non-technical users query databases in plain English.")
         st.link_button("View Code", "https://github.com/devanshi4/sql-ai-assistant")
