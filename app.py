@@ -156,7 +156,6 @@ with col_p2:
     with st.container():
         st.subheader("📉 Churn Predictor")
         # FIXED: Changed key from "data" to "churn" to avoid duplicate error
-        st_lottie(lottie_data2, height=150, key="churn")
         st.markdown("**Tech:** XGBoost, SHAP, Streamlit")
         st.markdown("An ML dashboard predicting customer risk with 79% accuracy & Explainable AI.")
         st.link_button("View Code", "https://github.com/devanshi4/Churn-Prediction")
