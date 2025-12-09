@@ -16,55 +16,59 @@ st.set_page_config(
 
 # Function to load Lottie Animations
 def load_lottieurl(url):
-    r = requests.get(url)
-    if r.status_code != 200:
+    try:
+        r = requests.get(url)
+        if r.status_code != 200:
+            return None
+        return r.json()
+    except:
         return None
-    return r.json()
 
-# --- LOAD ASSETS ---
-# 1. Hero Animation: WOMAN ANALYST
-lottie_coding = load_lottieurl("https://lottie.host/5aee9f59-69e1-45f6-b333-68d1c4423859/68d1c4423859.json")
-# 2. SQL Project Animation
-lottie_data = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_5njp3vgg.json")
-# 3. Churn Project Animation
-lottie_data2 = load_lottieurl("https://assets10.lottiefiles.com/packages/lf20_cpe8dcb0.json")
+# --- LOAD ASSETS (Working Links) ---
+# 1. Hero: Woman Analyst (Dark hair, Laptop)
+lottie_hero = load_lottieurl("https://lottie.host/0a7cc9d1-3729-411e-825c-559fa743b593/v1q7WfWb2V.json")
+# Alternative Hero if above fails: "https://assets5.lottiefiles.com/packages/lf20_3rwasyjy.json"
 
-# Custom CSS for a cleaner look
+# 2. SQL Project: Robot
+lottie_sql = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_5njp3vgg.json")
+
+# 3. Churn Project: Moving Graph
+lottie_churn = load_lottieurl("https://assets7.lottiefiles.com/packages/lf20_hs5pkq.json")
+
+# Custom CSS for clean buttons and badges
 st.markdown("""
 <style>
-    .main {
-        background-color: #f5f7fa; 
-    }
-    [data-testid="stSidebar"] {
-        background-color: #2b303b;
+    .main { background-color: #f5f7fa; }
+    .badge {
+        background-color: #ff4b4b;
         color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        margin-right: 5px;
     }
-    h1, h2, h3 {
-        color: #2b303b;
-    }
-    .metric-card {
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    }
+    div.stButton > button { width: 100%; }
 </style>
 """, unsafe_allow_html=True)
 
 # ======================
-# 2. SIDEBAR (Dark Themed)
+# 2. SIDEBAR
 # ======================
 with st.sidebar:
+    # Profile Pic
     try:
         image = Image.open("profile_pic.png")
         st.image(image, width=220)
     except:
         st.header("👩‍💻")
 
-    st.markdown("<h1 style='color: white;'>Devanshi Pandya</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #dcdcdc;'>📍 NYC, New York</p>", unsafe_allow_html=True)
+    st.markdown("<h1>Devanshi Pandya</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='color: gray;'>📍 NYC, New York</p>", unsafe_allow_html=True)
     
-    # Resume Download Button
+    st.markdown("---")
+    st.write("**RESUME & SOCIALS**")
+    
+    # Resume Button
     try:
         with open("Devanshi_Pandya_Resume.pdf", "rb") as pdf_file:
             st.download_button(
@@ -76,22 +80,18 @@ with st.sidebar:
     except:
         st.warning("Resume file missing")
 
-    st.markdown("---")
-    st.markdown("<h3 style='color: white;'>Connect</h3>", unsafe_allow_html=True)
     st.link_button("LinkedIn", "https://linkedin.com/in/YOUR_LINKEDIN")
     st.link_button("GitHub", "https://github.com/devanshi4")
 
-    # Skill Meters
+    # Skills
     st.markdown("---")
-    st.markdown("<h3 style='color: white;'>Core Skills</h3>", unsafe_allow_html=True)
-    st.write("Python & SQL")
-    st.progress(90)
-    st.write("Machine Learning")
+    st.write("**Core Skills**")
+    st.caption("Python & SQL")
+    st.progress(95)
+    st.caption("Machine Learning")
     st.progress(80)
-    st.write("Generative AI")
+    st.caption("Generative AI")
     st.progress(75)
-    st.write("Data Visualization")
-    st.progress(85)
 
 # ======================
 # 3. HERO SECTION
@@ -106,58 +106,69 @@ with col1:
     Currently optimizing network operations at **Verizon**, I specialize in replacing manual workflows 
     with **AI-driven pipelines** and **predictive models**.
     """)
-    st.info("**Current Focus:** Leveraging LLMs (LangChain) to automate SQL queries & building Explainable AI models.")
+    st.markdown("""
+    <span class="badge">Python</span>
+    <span class="badge">Generative AI</span>
+    <span class="badge">SQL</span>
+    <span class="badge">Tableau</span>
+    <span class="badge">A/B Testing</span>
+    """, unsafe_allow_html=True)
 
 with col2:
-    # This key ensures the animation reloads correctly
-    st_lottie(lottie_coding, height=250, key="woman_analyst")
+    # Hero Animation
+    if lottie_hero:
+        st_lottie(lottie_hero, height=250, key="hero_anim")
 
 st.markdown("---")
 
 # ======================
-# 4. INTERACTIVE CAREER TIMELINE
+# 4. CAREER JOURNEY
 # ======================
 st.header("📅 My Career Journey")
 
-# Creating the Timeline Data
 data = [
-    dict(Task="Master's at USC", Start='2021-08-01', Finish='2023-05-30', Resource='Education'),
-    dict(Task="USC Auxiliary Services", Start='2022-02-01', Finish='2023-05-01', Resource='Work'),
-    dict(Task="Brillio", Start='2023-09-01', Finish='2024-06-30', Resource='Work'),
-    dict(Task="Cloudify (Verizon)", Start='2024-07-01', Finish='2025-12-31', Resource='Work') # Ongoing
+    dict(Task="Cloudify (Verizon)", Start='2024-08-01', Finish='2025-12-31', Resource='Current', 
+         Description="AI Integration, SQL Pipelines"),
+    dict(Task="Brillio", Start='2023-09-01', Finish='2024-07-31', Resource='Past', 
+         Description="Predictive Models, ETL Automation"),
+    dict(Task="Verizon Internship", Start='2022-05-01', Finish='2022-08-30', Resource='Internship', 
+         Description="Churn Prediction (18% lift), A/B Testing"),
+    dict(Task="USC Auxiliary", Start='2022-02-01', Finish='2023-05-01', Resource='Past', 
+         Description="Dashboarding, Supply Chain Analytics"),
+    dict(Task="Master's at USC", Start='2021-08-01', Finish='2023-05-30', Resource='Education', 
+         Description="M.S. Electrical & Computer Engineering"),
 ]
 df = pd.DataFrame(data)
 
-# Creating the Gantt Chart using Plotly
 fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource", 
-                  title="Experience Timeline", height=300,
-                  color_discrete_map={'Work': '#ff4b4b', 'Education': '#1f77b4'})
-
-fig.update_yaxes(autorange="reversed") # Verify visual alignment
+                  title="Professional Timeline (Hover for details)", height=350,
+                  hover_data=["Description"],
+                  color_discrete_map={'Current': '#ff4b4b', 'Past': '#2d2d2d', 'Internship': '#ffa500', 'Education': '#1f77b4'})
+fig.update_yaxes(autorange="reversed")
 st.plotly_chart(fig, use_container_width=True)
 
 # ======================
-# 5. PROJECT SHOWCASE (Interactive Cards)
+# 5. PROJECTS
 # ======================
 st.header("💻 What I've Built")
-st.write("Click the links to explore the code or demo.")
-
 col_p1, col_p2 = st.columns(2)
 
 with col_p1:
-    with st.container():
+    with st.container(border=True):
         st.subheader("🤖 AI SQL Assistant")
-        st_lottie(lottie_data, height=150, key="data")
+        if lottie_sql:
+            st_lottie(lottie_sql, height=150, key="sql_anim")
         st.markdown("**Tech:** LangChain, OpenAI, PostgreSQL")
-        st.markdown("A GenAI tool that lets non-technical users query databases in plain English.")
+        st.write("A GenAI tool that lets non-technical users query databases in plain English.")
         st.link_button("View Code", "https://github.com/devanshi4/sql-ai-assistant")
 
 with col_p2:
-    with st.container():
+    with st.container(border=True):
         st.subheader("📉 Churn Predictor")
-        # FIXED: Changed key from "data" to "churn" to avoid duplicate error
+        if lottie_churn:
+            st_lottie(lottie_churn, height=150, key="churn_anim")
         st.markdown("**Tech:** XGBoost, SHAP, Streamlit")
-        st.markdown("An ML dashboard predicting customer risk with 79% accuracy & Explainable AI.")
+        st.write("An ML dashboard predicting customer risk with 79% accuracy & Explainable AI.")
         st.link_button("View Code", "https://github.com/devanshi4/Churn-Prediction")
 
 # ======================
@@ -170,6 +181,7 @@ tab1, tab2, tab3, tab4 = st.tabs(["Verizon (Current)", "Brillio", "Verizon Inter
 
 with tab1:
     st.subheader("Data Analyst | Cloudify Technologies (Contracted to Verizon)")
+    st.caption("August 2024 - Present")
     st.markdown("""
     - **AI Modernization:** Replaced a static 450-line SQL script with an **AI-assisted Python pipeline**, using GenAI to parse complex JSON logs.
     - **Operational Efficiency:** Analyzed orchestration logs to build cycle-time models, reducing troubleshooting time by **~40%**.
@@ -178,6 +190,7 @@ with tab1:
 
 with tab2:
     st.subheader("Data Analyst | Brillio")
+    st.caption("September 2023 - July 2024")
     st.markdown("""
     - **Predictive Modeling:** Built Time Series & Regression models in Python/R, improving forecast accuracy by **20-30%**.
     - **ETL Automation:** Engineered automated pipelines (SQL/Python), reducing latency by **~40%**.
@@ -185,32 +198,33 @@ with tab2:
     """)
 
 with tab3:
-    st.subheader("Intern | Verizon")
+    st.subheader("Data Analyst Intern | Verizon")
+    st.caption("May 2022 - August 2022")
     st.markdown("""
     - **Predictive Modeling:** Enhanced customer churn prediction models, improving accuracy by **18%** to support targeted retention campaigns.
-    - **Customer Segmentation:** Applied unsupervised learning techniques (**K-means, DBSCAN**) to cluster user bases for personalized marketing.
-    - **A/B Testing:** Designed and executed statistical experiments (A/B tests) to evaluate the impact of new product features on user engagement.
+    - **Customer Segmentation:** Applied unsupervised learning techniques (**K-means, DBSCAN**) to cluster user bases.
+    - **A/B Testing:** Designed and executed statistical experiments (A/B tests) to evaluate the impact of new product features.
     - **Strategic Insights:** Translated complex clustering and churn findings into actionable insights for non-technical stakeholders.
     """)
 
 with tab4:
     st.subheader("Business Data Analyst | USC Auxiliary Services")
+    st.caption("February 2022 - May 2023")
     st.markdown("""
     - **Dashboarding:** Built interactive Power BI/Excel dashboards that reduced manual reporting time by **~40%**.
     - **Supply Chain:** Optimized inventory tracking for high-volume dining operations.
     """)
 
 # ======================
-# 7. CONTACT FORM
+# 7. CONTACT
 # ======================
 st.markdown("---")
 st.header("📬 Let's Connect")
-
 contact_form = """
 <form action="https://formsubmit.co/devanshipandya44@gmail.com" method="POST">
-     <input type="text" name="name" placeholder="Your Name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
-     <input type="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
-     <textarea name="message" placeholder="Your Message" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
+     <input type="text" name="name" placeholder="Your Name" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; margin-bottom:10px;">
+     <input type="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; margin-bottom:10px;">
+     <textarea name="message" placeholder="Your Message" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; margin-bottom:10px;"></textarea>
      <button type="submit" style="background-color: #ff4b4b; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Send Message</button>
 </form>
 """
