@@ -87,11 +87,13 @@ with st.sidebar:
     st.markdown("---")
     st.write("**Core Skills**")
     st.caption("Python & SQL")
-    st.progress(95)
+    st.progress(90)
     st.caption("Machine Learning")
     st.progress(80)
     st.caption("Generative AI")
     st.progress(75)
+    st.write("Data Visualization")
+    st.progress(85)
 
 # ======================
 # 3. HERO SECTION
@@ -111,7 +113,7 @@ with col1:
     <span class="badge">Generative AI</span>
     <span class="badge">SQL</span>
     <span class="badge">Tableau</span>
-    <span class="badge">A/B Testing</span>
+    <span class="badge">Predictive Modeling</span>
     """, unsafe_allow_html=True)
 
 with col2:
@@ -126,26 +128,23 @@ st.markdown("---")
 # ======================
 st.header("📅 My Career Journey")
 
+# Creating the Timeline Data
 data = [
-    dict(Task="Cloudify (Verizon)", Start='2024-08-01', Finish='2025-12-31', Resource='Current', 
-         Description="AI Integration, SQL Pipelines"),
-    dict(Task="Brillio", Start='2023-09-01', Finish='2024-07-31', Resource='Past', 
-         Description="Predictive Models, ETL Automation"),
-    dict(Task="Verizon Internship", Start='2022-05-01', Finish='2022-08-30', Resource='Internship', 
-         Description="Churn Prediction (18% lift), A/B Testing"),
-    dict(Task="USC Auxiliary", Start='2022-02-01', Finish='2023-05-01', Resource='Past', 
-         Description="Dashboarding, Supply Chain Analytics"),
-    dict(Task="Master's at USC", Start='2021-08-01', Finish='2023-05-30', Resource='Education', 
-         Description="M.S. Electrical & Computer Engineering"),
+    dict(Task="Master's at USC", Start='2021-08-01', Finish='2023-05-30', Resource='Education'),
+    dict(Task="USC Auxiliary Services", Start='2022-02-01', Finish='2023-05-01', Resource='Work'),
+    dict(Task="Brillio", Start='2023-09-01', Finish='2024-06-30', Resource='Work'),
+    dict(Task="Cloudify (Verizon)", Start='2024-07-01', Finish='2025-12-31', Resource='Work') # Ongoing
 ]
 df = pd.DataFrame(data)
 
+# Creating the Gantt Chart using Plotly
 fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource", 
-                  title="Professional Timeline (Hover for details)", height=350,
-                  hover_data=["Description"],
-                  color_discrete_map={'Current': '#ff4b4b', 'Past': '#2d2d2d', 'Internship': '#ffa500', 'Education': '#1f77b4'})
-fig.update_yaxes(autorange="reversed")
+                  title="Experience Timeline", height=300,
+                  color_discrete_map={'Work': '#ff4b4b', 'Education': '#1f77b4'})
+
+fig.update_yaxes(autorange="reversed") # Verify visual alignment
 st.plotly_chart(fig, use_container_width=True)
+
 
 # ======================
 # 5. PROJECTS
