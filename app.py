@@ -193,8 +193,6 @@ with tab3:
     - **Strategic Insights:** Translated complex clustering and churn findings into actionable insights for non-technical stakeholders.
     """)
 
-
-
 with tab4:
     st.subheader("Business Data Analyst | USC Auxiliary Services")
     st.markdown("""
